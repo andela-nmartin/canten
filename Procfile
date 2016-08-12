@@ -1,1 +1,1 @@
-web: php -S http://canten.herokuapp.com/
+web: npm start
