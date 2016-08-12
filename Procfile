@@ -1,1 +1,1 @@
-php -S http://canten.herokuapp.com/
+web: php -S http://canten.herokuapp.com/
