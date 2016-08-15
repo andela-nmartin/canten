@@ -5,7 +5,7 @@ body {
 .titular {
   color: #000;
   font-weight: 500;
-  font-family: "Verdana", "Calibri", Serif;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
   text-align: center;
 }
 
@@ -17,7 +17,7 @@ body {
 
 #play-field{
   background-color: #FFF;
-  border: 1px solid #BEBEBE;
+  border: 1px solid #000;
   height: 800px;
   margin: auto;
   width: 1400px;
