@@ -5,6 +5,8 @@ var dy = 5;
 var x = 0;
 var xpoint = 0;
 var xpos = 0;
+var ypoint = 0;
+var ypos = 0;
 var starty = Math.random() * 150;
 var endy = Math.random() * 150;
 var diff = (endy - starty)/60;
@@ -103,16 +105,28 @@ function draw() {
   // move the ball
   console.log(diff);
   xpos = x % 120;
+  ypos = starty % 300;
   if (xpos <= 60) {
     xpoint = x % 60;
-    starty = starty + diff;
-    ball(possiblePoints[xpoint], starty + diff, 5);
+    if (ypos <= 150) {
+      ypoint = (starty % 150) + diff;
+      ball(possiblePoints[xpoint], ypoint, 5);
+    } else {
+      ypoint = 150 - ((starty % 150) + diff);
+      ball(possiblePoints[xpoint], ypoint, 5);
+    }
   } else {
     xpoint = (60 - x % 60);
-    starty = starty + diff;
-    ball(possiblePoints[xpoint], starty + diff, 5);
+    if (ypos <= 150) {
+      ypoint = (starty % 150) + diff;
+      ball(possiblePoints[xpoint], ypoint, 5);
+    } else {
+      ypoint = 150 - ((starty % 150) + diff);
+      ball(possiblePoints[xpoint], ypoint, 5);
+    }
   }
   x = x + 1;
+  starty = starty + 1;
 }
 
 // clear the canvas
