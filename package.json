@@ -9,17 +9,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/andela-nmartin/canten.git"
+    "url": "git+https://github.com/n8e/canten.git"
   },
   "keywords": [
     "tennis"
   ],
-  "author": "Nate Martin <godmetweenciati@gmail.com> (https://github.com/andela-nmartin)",
+  "author": "Nate Martin <godmetweenciati@gmail.com> (https://github.com/n8e)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/andela-nmartin/canten/issues"
+    "url": "https://github.com/n8e/canten/issues"
   },
-  "homepage": "https://github.com/andela-nmartin/canten#readme",
+  "homepage": "https://github.com/n8e/canten#readme",
   "dependencies": {
     "body-parser": "^1.15.2",
     "dotenv": "^2.0.0",
