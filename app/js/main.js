@@ -1,6 +1,5 @@
 var canvas;
 var ctx;
-var dx = 5;
 var dy = 5;
 var x = 0;
 var xpoint = 0;
@@ -26,35 +25,27 @@ function divider() {
 // rendering the left bat
 function leftBat(y) {
   ctx.fillStyle = '#000';
-  ctx.fillRect(0, y, 4, 20);
+  ctx.fillRect(0, y, 2, 20);
 }
 
 // rendering the right bat
 function rightBat(y) {
   ctx.fillStyle = '#000';
-  ctx.fillRect(296, y, 4, 20);
+  ctx.fillRect(298, y, 2, 20);
 }
 
 // rendering the ball
 function ball(x, y, r) {
   ctx.beginPath();
-  ctx.arc(x, y, r, 0, Math.PI * 2, true);
+  ctx.arc(x, y, r, 0, Math.PI * 2);
   ctx.fillStyle = '#f00';
   ctx.fill();
-  ctx.lineWidth = 1;
-  ctx.strokeStyle = 'black';
-  ctx.stroke();
 }
 
 var possiblePoints = [];
 for (var i = 0; i <= 300/dy; i++) {
   possiblePoints.push(i * dy);
 }
-
-/* The ball needs to move from any random point on
-the left side of the table in any random direction.
-If it does not intercept any of the bats then it should
-exit the round. */
 
 // to handle the key press events for the bats
 function doKeyDown(evt) {
@@ -73,14 +64,14 @@ function doKeyDown(evt) {
       break;
     case 87:
       /* W key was pressed */
-      if (lefty - dx > -5) {
-        lefty -= dx;
+      if (lefty - dy > -5) {
+        lefty -= dy;
       }
       break;
     case 83:
       /* S key was pressed */
-      if (lefty + dx < HEIGHT-15) {
-        lefty += dx;
+      if (lefty + dy < HEIGHT-15) {
+        lefty += dy;
       }
       break;
   }
@@ -90,7 +81,7 @@ function doKeyDown(evt) {
 function init() {
   canvas = document.getElementById('play-field');
   ctx = canvas.getContext('2d');
-  return setInterval(draw, 20);
+  return setInterval(draw, 60);
 }
 
 // rendering all the components
@@ -102,13 +93,17 @@ function draw() {
   leftBat(lefty);
   rightBat(righty);
   ctx.fillStyle = 'black';
-  // move the ball
-  console.log(diff);
+
+  /* The ball needs to move from any random point on
+  the left side of the table in any random direction.
+  If it does not intercept any of the bats then it should
+  exit the round. */
+
   xpos = x % 120;
   ypos = starty % 300;
-  if (xpos <= 60) {
+  if (xpos < 60) {
     xpoint = x % 60;
-    if (ypos <= 150) {
+    if (ypos < 150) {
       ypoint = (starty % 150) + diff;
       ball(possiblePoints[xpoint], ypoint, 5);
     } else {
@@ -117,7 +112,7 @@ function draw() {
     }
   } else {
     xpoint = (60 - x % 60);
-    if (ypos <= 150) {
+    if (ypos < 150) {
       ypoint = (starty % 150) + diff;
       ball(possiblePoints[xpoint], ypoint, 5);
     } else {
@@ -136,4 +131,4 @@ function clear() {
 
 // function call execution
 init();
-window.addEventListener('keydown',doKeyDown,true);
+window.addEventListener('keydown', doKeyDown, true);

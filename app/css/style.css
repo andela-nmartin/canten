@@ -1,9 +1,9 @@
 body {
-  background-color: #efefef;
+  background-color: #000;
 }
 
 .titular {
-  color: #000;
+  color: #FFF;
   font-weight: 500;
   font-family: "Trebuchet MS", Helvetica, sans-serif;
   text-align: center;
@@ -16,8 +16,8 @@ body {
 }
 
 #play-field{
-  background-color: #FFF;
-  border: 1px solid #000;
+  background-color: #008542;
+  border: 1px solid #BEBEBE;
   height: 800px;
   margin: auto;
   width: 1400px;
