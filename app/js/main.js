@@ -20,6 +20,13 @@ var righty = 65
 var lefty = 65;
 var WIDTH = 300;
 var HEIGHT = 150;
+var possiblePoints = [];
+
+// possible x points
+for (var i = 0; i <= 300/dy; i++) {
+  possiblePoints.push(i * dy);
+}
+
 
 // the dividing center
 function divider() {
@@ -48,11 +55,6 @@ function ball(x, y, r) {
   ctx.fillStyle = '#f00';
   ctx.fill();
   ctx.closePath();
-}
-
-var possiblePoints = [];
-for (var i = 0; i <= 300/dy; i++) {
-  possiblePoints.push(i * dy);
 }
 
 // to handle the key press events for the bats
@@ -84,6 +86,12 @@ function doKeyDown(evt) {
       break;
   }
 }
+
+// to change the score on players pad
+function changeScore(padId) {
+  document.getElementById(padId).innerText = parseInt(document.getElementById(padId).innerText) + 1;
+}
+
 function moveBall() {
   /* The ball needs to move from any random point on
   the left side of the table in any random direction.
@@ -93,8 +101,9 @@ function moveBall() {
   xpos = x % 120;
   ypos = starty % 300;
   if (xpos < 60) {
+    console.log('left side', xpos);
     if (xpos === 0) {
-      document.getElementById('left-player').innerText = parseInt(document.getElementById('left-player').innerText) + 1;
+      changeScore('left-player');
     }
     xpoint = x % 60 // if not on the bat's edge then call modal
     if (ypos < 150) {
@@ -104,29 +113,54 @@ function moveBall() {
       ypoint = 150 - ((starty % 150) + diff);
       ball(possiblePoints[xpoint], ypoint, 5);
     }
-  } else {
-    if (xpos === 60) {
-      document.getElementById('right-player').innerText = parseInt(document.getElementById('right-player').innerText) + 1;
-    }
+    x = x + 1;
+    starty = starty + 1;
+  } else if(xpos === 120 || xpos === 60 || xpos === 0) {
+    console.log('inside bat edge check', xpos);
+    if ((ypoint >= lefty - 10 && ypoint <= lefty + 10) || (ypoint >= righty - 10 && ypoint <= righty + 10)) {
+      if (xpos === 60) {
+        changeScore('right-player');
+      }
 
-    xpoint = (60 - x % 60); // if not on the bat's edge then call modal
-    if (ypos < 150) {
-      ypoint = (starty % 150) + diff;
-      ball(possiblePoints[xpoint], ypoint, 5);
+      xpoint = (60 - x % 60); // if not on the bat's edge then call modal
+      if (ypos < 150) {
+        ypoint = (starty % 150) + diff;
+        ball(possiblePoints[xpoint], ypoint, 5);
+      } else {
+        ypoint = 150 - ((starty % 150) + diff);
+        ball(possiblePoints[xpoint], ypoint, 5);
+      }
+      x = x + 1;
+      starty = starty + 1;
     } else {
-      ypoint = 150 - ((starty % 150) + diff);
-      ball(possiblePoints[xpoint], ypoint, 5);
+      return;
+    }
+  } else {
+    console.log('reverse movement', xpos);
+    if ((ypoint >= lefty - 10 && ypoint <= lefty + 10) || (ypoint >= righty - 10 && ypoint <= righty + 10)) {
+      if (xpos === 60) {
+        changeScore('right-player');
+      }
+
+      xpoint = (60 - x % 60); // if not on the bat's edge then call modal
+      if (ypos < 150) {
+        ypoint = (starty % 150) + diff;
+        ball(possiblePoints[xpoint], ypoint, 5);
+      } else {
+        ypoint = 150 - ((starty % 150) + diff);
+        ball(possiblePoints[xpoint], ypoint, 5);
+      }
+      x = x + 1;
+      starty = starty + 1;
+    } else {
+      return;
     }
   }
-  x = x + 1;
-  starty = starty + 1;
 }
 
-// the initial canvas component rendering
-function init() {
-  canvas = document.getElementById('play-field');
-  ctx = canvas.getContext('2d');
-  return setInterval(draw, 20);
+// clear the canvas
+function clear() {
+  ctx.clearRect(0, 0, WIDTH, HEIGHT);
 }
 
 // rendering all the components
@@ -141,9 +175,11 @@ function draw() {
   moveBall();
 }
 
-// clear the canvas
-function clear() {
-  ctx.clearRect(0, 0, WIDTH, HEIGHT);
+// the initial canvas component rendering
+function init() {
+  canvas = document.getElementById('play-field');
+  ctx = canvas.getContext('2d');
+  return setInterval(draw, 20);
 }
 
 // function call execution
