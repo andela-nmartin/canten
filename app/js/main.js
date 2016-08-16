@@ -57,6 +57,7 @@ function ball(x, y, r) {
   ctx.closePath();
 }
 
+
 // to handle the key press events for the bats
 function doKeyDown(evt) {
   switch (evt.keyCode) {
@@ -92,12 +93,11 @@ function changeScore(padId) {
   document.getElementById(padId).innerText = parseInt(document.getElementById(padId).innerText) + 1;
 }
 
-function moveBall() {
-  /* The ball needs to move from any random point on
-  the left side of the table in any random direction.
-  If it does not intercept any of the bats then it should
-  exit the round. */
 
+/* The ball needs to move from any random point on the left side of the table in
+any random direction. If it does not intercept any of the bats then it should
+exit the round. */
+function moveBall() {
   xpos = x % 120;
   ypos = starty % 300;
   if (xpos < 60) {
@@ -158,6 +158,7 @@ function moveBall() {
   }
 }
 
+
 // clear the canvas
 function clear() {
   ctx.clearRect(0, 0, WIDTH, HEIGHT);
@@ -182,6 +183,6 @@ function init() {
   return setInterval(draw, 20);
 }
 
-// function call execution
+// function call
 init();
 window.addEventListener('keydown', doKeyDown, true);
