@@ -101,7 +101,6 @@ function moveBall() {
   xpos = x % 120;
   ypos = starty % 300;
   if (xpos < 60) {
-    console.log('left side', xpos);
     if (xpos === 0) {
       changeScore('left-player');
     }
