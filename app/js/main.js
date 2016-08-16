@@ -1,3 +1,10 @@
+/*
+* TO_DO
+* If the bat does not touch the ball then a point is added to opponent
+* After the miss, a new serve should occur
+* The game should end after 10 sets
+*/
+
 var canvas;
 var ctx;
 var dy = 5;
@@ -24,22 +31,23 @@ function divider() {
 
 // rendering the left bat
 function leftBat(y) {
-  ctx.fillStyle = '#000';
+  ctx.fillStyle = '#FF6801';
   ctx.fillRect(0, y, 2, 20);
 }
 
 // rendering the right bat
 function rightBat(y) {
-  ctx.fillStyle = '#000';
+  ctx.fillStyle = '#FF6801';
   ctx.fillRect(298, y, 2, 20);
 }
 
 // rendering the ball
 function ball(x, y, r) {
   ctx.beginPath();
-  ctx.arc(x, y, r, 0, Math.PI * 2);
+  ctx.arc(x, y, r, 0, Math.PI * 2, false);
   ctx.fillStyle = '#f00';
   ctx.fill();
+  ctx.closePath();
 }
 
 var possiblePoints = [];
@@ -76,12 +84,49 @@ function doKeyDown(evt) {
       break;
   }
 }
+function moveBall() {
+  /* The ball needs to move from any random point on
+  the left side of the table in any random direction.
+  If it does not intercept any of the bats then it should
+  exit the round. */
+
+  xpos = x % 120;
+  ypos = starty % 300;
+  if (xpos < 60) {
+    if (xpos === 0) {
+      document.getElementById('left-player').innerText = parseInt(document.getElementById('left-player').innerText) + 1;
+    }
+    xpoint = x % 60 // if not on the bat's edge then call modal
+    if (ypos < 150) {
+      ypoint = (starty % 150) + diff;
+      ball(possiblePoints[xpoint], ypoint, 5);
+    } else {
+      ypoint = 150 - ((starty % 150) + diff);
+      ball(possiblePoints[xpoint], ypoint, 5);
+    }
+  } else {
+    if (xpos === 60) {
+      document.getElementById('right-player').innerText = parseInt(document.getElementById('right-player').innerText) + 1;
+    }
+
+    xpoint = (60 - x % 60); // if not on the bat's edge then call modal
+    if (ypos < 150) {
+      ypoint = (starty % 150) + diff;
+      ball(possiblePoints[xpoint], ypoint, 5);
+    } else {
+      ypoint = 150 - ((starty % 150) + diff);
+      ball(possiblePoints[xpoint], ypoint, 5);
+    }
+  }
+  x = x + 1;
+  starty = starty + 1;
+}
 
 // the initial canvas component rendering
 function init() {
   canvas = document.getElementById('play-field');
   ctx = canvas.getContext('2d');
-  return setInterval(draw, 60);
+  return setInterval(draw, 20);
 }
 
 // rendering all the components
@@ -93,35 +138,7 @@ function draw() {
   leftBat(lefty);
   rightBat(righty);
   ctx.fillStyle = 'black';
-
-  /* The ball needs to move from any random point on
-  the left side of the table in any random direction.
-  If it does not intercept any of the bats then it should
-  exit the round. */
-
-  xpos = x % 120;
-  ypos = starty % 300;
-  if (xpos < 60) {
-    xpoint = x % 60;
-    if (ypos < 150) {
-      ypoint = (starty % 150) + diff;
-      ball(possiblePoints[xpoint], ypoint, 5);
-    } else {
-      ypoint = 150 - ((starty % 150) + diff);
-      ball(possiblePoints[xpoint], ypoint, 5);
-    }
-  } else {
-    xpoint = (60 - x % 60);
-    if (ypos < 150) {
-      ypoint = (starty % 150) + diff;
-      ball(possiblePoints[xpoint], ypoint, 5);
-    } else {
-      ypoint = 150 - ((starty % 150) + diff);
-      ball(possiblePoints[xpoint], ypoint, 5);
-    }
-  }
-  x = x + 1;
-  starty = starty + 1;
+  moveBall();
 }
 
 // clear the canvas

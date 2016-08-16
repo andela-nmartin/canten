@@ -6,19 +6,48 @@ body {
   color: #FFF;
   font-weight: 500;
   font-family: "Trebuchet MS", Helvetica, sans-serif;
+  padding-top: 20px;
+  padding-bottom: 20px;
   text-align: center;
 }
 
 .play-master {
-  height: 800px;
+  height: 85%;
   margin: auto;
-  width: 1400px;
+  width: 90%;
 }
 
 #play-field{
   background-color: #008542;
   border: 1px solid #BEBEBE;
-  height: 800px;
+  height: 100%;
+  width: 100%;
+}
+
+.message {
+  background-color: #000;
+  color: #FFF;
+  opacity: 0.8;
+  text-align: center;
+}
+
+.score {
+  border-radius: 3px;
+  display: inline-block;
+  height: 40px;
   margin: auto;
-  width: 1400px;
+  width:100%;
+}
+
+.left-score, .right-score {
+  background-color: #FFF;
+  border: 1px solid #000;
+  border-radius: 3px;
+  color: #000;
+  display: inline-block;
+  float: left;
+  font-size: 150%;
+  height: 100%;
+  text-align: center;
+  width: 50%;
 }
